@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS post;
+
+CREATE TABLE post (
+    post_no   INT          NOT NULL AUTO_INCREMENT,
+    title     VARCHAR(200) NOT NULL,
+    writer    VARCHAR(100) NOT NULL,
+    content   TEXT,
+    reg_date  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    upd_date  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (post_no)
+);

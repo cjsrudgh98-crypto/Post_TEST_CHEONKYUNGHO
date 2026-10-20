@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 수정</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>게시글 수정</h1>
+
+        <form id="form" th:action="@{/Post/update}" method="post">
+            <input type="hidden" name="postNo" th:value="${post.postNo}">
+            <table class="form">
+                <tr>
+                    <th>번호</th>
+                    <td th:text="${post.postNo}">1</td>
+                </tr>
+                <tr>
+                    <th>제목</th>
+                    <td><input type="text" name="title" th:value="${post.title}" required maxlength="200"></td>
+                </tr>
+                <tr>
+                    <th>작성자</th>
+                    <td><input type="text" name="writer" th:value="${post.writer}" required maxlength="100"></td>
+                </tr>
+                <tr>
+                    <th>내용</th>
+                    <td><textarea name="content" rows="10" th:text="${post.content}"></textarea></td>
+                </tr>
+            </table>
+
+            <div class="actions">
+                <button type="submit" class="btn">수정</button>
+                <button type="button" class="btn danger" id="btn-delete">삭제</button>
+                <a class="btn secondary" th:href="@{/Post/list}">목록</a>
+            </div>
+        </form>
+    </div>
+
+    <script th:inline="javascript">
+        const postNo = /*[[${post.postNo}]]*/ 0;
+        const deleteUrl = /*[[@{/Post/{postNo}(postNo=${post.postNo})}]]*/ '';
+        const listUrl = /*[[@{/Post/list}]]*/ '';
+
+        // 게시글 삭제 - AJAX
+        document.getElementById('btn-delete').addEventListener('click', async () => {
+            if (!confirm('정말 삭제하시겠습니까?')) return;
+
+            try {
+                const response = await fetch(deleteUrl, { method: 'DELETE' });
+                const data = await response.json();
+                alert(data.message);
+                if (data.result) {
+                    location.href = listUrl;
+                }
+            } catch (error) {
+                console.error(error);
+                alert('게시글 삭제 중 오류가 발생했습니다.');
+            }
+        });
+    </script>
+</body>
+</html>

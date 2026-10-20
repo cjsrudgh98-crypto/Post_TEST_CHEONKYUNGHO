@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메인 화면</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>Spring Boot 게시판</h1>
+        <p>Spring Boot · MyBatis · MySQL · Thymeleaf 기반 게시판 프로젝트입니다.</p>
+        <a class="btn" th:href="@{/Post/list}">게시글 목록</a>
+    </div>
+</body>
+</html>

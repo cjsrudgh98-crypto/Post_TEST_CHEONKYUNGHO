@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 조회</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>게시글 조회</h1>
+
+        <table class="form">
+            <tr>
+                <th>번호</th>
+                <td th:text="${post.postNo}">1</td>
+            </tr>
+            <tr>
+                <th>제목</th>
+                <td th:text="${post.title}">제목</td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td th:text="${post.writer}">작성자</td>
+            </tr>
+            <tr>
+                <th>등록일자</th>
+                <td th:text="${#dates.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">등록일자</td>
+            </tr>
+            <tr>
+                <th>수정일자</th>
+                <td th:text="${#dates.format(post.updDate, 'yyyy-MM-dd HH:mm:ss')}">수정일자</td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td><pre class="content" th:text="${post.content}">내용</pre></td>
+            </tr>
+        </table>
+
+        <div class="actions">
+            <a class="btn" th:href="@{/Post/update/{postNo}(postNo=${post.postNo})}">수정</a>
+            <a class="btn secondary" th:href="@{/Post/list}">목록</a>
+        </div>
+    </div>
+</body>
+</html>

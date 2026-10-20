@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 목록</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+        <h1>게시글 목록</h1>
+        <div class="actions right">
+            <a class="btn" th:href="@{/Post/insert}">글쓰기</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th width="80">번호</th>
+                    <th>제목</th>
+                    <th width="120">작성자</th>
+                    <th width="180">등록일자</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(list)}">
+                    <td colspan="4" class="center">조회된 게시글이 없습니다.</td>
+                </tr>
+                <tr th:each="post : ${list}">
+                    <td class="center" th:text="${post.postNo}">1</td>
+                    <td>
+                        <a th:href="@{/Post/read/{postNo}(postNo=${post.postNo})}" th:text="${post.title}">제목</a>
+                    </td>
+                    <td class="center" th:text="${post.writer}">작성자</td>
+                    <td class="center" th:text="${#dates.format(post.regDate, 'yyyy-MM-dd HH:mm:ss')}">등록일자</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 페이지네이션 -->
+        <div class="pagination" th:if="${page.total > 0}">
+            <a th:href="@{/Post/list(page=${page.first}, size=${page.size})}">&laquo;</a>
+            <a th:if="${page.page != page.first}" th:href="@{/Post/list(page=${page.prev}, size=${page.size})}">&lsaquo;</a>
+            <th:block th:each="no : ${#numbers.sequence(page.start, page.end)}">
+                <a th:href="@{/Post/list(page=${no}, size=${page.size})}"
+                   th:text="${no}"
+                   th:classappend="${no == page.page} ? 'active'">1</a>
+            </th:block>
+            <a th:if="${page.page != page.last}" th:href="@{/Post/list(page=${page.next}, size=${page.size})}">&rsaquo;</a>
+            <a th:href="@{/Post/list(page=${page.last}, size=${page.size})}">&raquo;</a>
+        </div>
+
+        <div class="actions">
+            <a class="btn secondary" th:href="@{/}">메인</a>
+        </div>
+    </div>
+</body>
+</html>
